@@ -33,6 +33,8 @@ A bilingual (Chinese / English) restaurant brand website for **Hakka Lab (客味
 | [Vue Router 4](https://router.vuejs.org) | Client-side routing |
 | [Supabase](https://supabase.com) | Backend and database (PostgreSQL) for reservations |
 | [Vite 6](https://vite.dev) | Build tool and dev server |
+| ChatGPT | Content writing and menu design |
+| Claude.ai | AI-assisted ideation and development support |
 
 ## Project Structure
 
