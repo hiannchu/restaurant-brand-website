@@ -2,6 +2,9 @@
 
 A bilingual (Chinese / English) restaurant brand website for **Hakka Lab (客味實驗室)**, a contemporary Hakka cuisine concept. Built as a portfolio project with a focus on visual storytelling, scroll-driven animation, and a full reservation management system.
 
+## Live Demo
+https://restaurant-brand-website.vercel.app
+
 ---
 
 ## Features
