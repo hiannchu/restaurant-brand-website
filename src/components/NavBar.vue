@@ -66,6 +66,8 @@ watch(isScrolled, (scrolled) => {
   }
 })
 
+let navHasEntered = false
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
   document.addEventListener('click', handleClickOutside)
@@ -75,6 +77,10 @@ onMounted(() => {
     } else {
       gsap.set(headerRef.value, { paddingTop: '24px', paddingBottom: '24px', backgroundColor: 'rgba(0,0,0,1)' })
     }
+  }
+  if (!navHasEntered && headerRef.value) {
+    navHasEntered = true
+    gsap.from(headerRef.value, { opacity: 0, y: -24, duration: 0.9, delay: 0.2, ease: 'power3.out' })
   }
 })
 onUnmounted(() => {

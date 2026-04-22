@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useLang } from './composables/useLang'
+import { useLenis } from './composables/useLenis'
 import LoadingScreen from './components/LoadingScreen.vue'
 import LangSplash from './components/LangSplash.vue'
 import type { Lang } from './i18n'
 
 const { setLang } = useLang()
+useLenis()
 const showLoading = ref(true)
 const showSplash = ref(false)
 

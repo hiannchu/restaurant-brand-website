@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 const { lang } = useLang()
 
 const heroRef = ref<HTMLElement | null>(null)
+const heroBgRef = ref<HTMLElement | null>(null)
 const col1Ref = ref<HTMLElement | null>(null)
 const col2Ref = ref<HTMLElement | null>(null)
 const col3Ref = ref<HTMLElement | null>(null)
@@ -22,11 +23,27 @@ const heroCol3 = computed(() => translations[lang.value].hero.col3 as readonly s
 
 let ctx: ReturnType<typeof gsap.context> | null = null
 
+// Persists across lang-switch re-mounts so entrance only plays once per page load
+let hasEntered = false
+
 onMounted(() => {
   if (heroRef.value) heroRef.value.style.height = window.innerHeight + 'px'
 
   ctx = gsap.context(() => {
-    gsap.set([col1Ref.value, col2Ref.value, col3Ref.value], { x: 0, opacity: 1 })
+    if (!hasEntered) {
+      hasEntered = true
+
+      gsap.set([heroBgRef.value, col1Ref.value, col2Ref.value, col3Ref.value], { opacity: 0 })
+      gsap.set([col1Ref.value, col2Ref.value, col3Ref.value], { y: 30 })
+
+      gsap.timeline()
+        .to(heroBgRef.value, { opacity: 1, duration: 1.4, ease: 'power2.out' }, 0)
+        .to(col1Ref.value, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 0.5)
+        .to(col2Ref.value, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 0.65)
+        .to(col3Ref.value, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 0.8)
+    } else {
+      gsap.set([col1Ref.value, col2Ref.value, col3Ref.value], { x: 0, opacity: 1, y: 0 })
+    }
 
     const scrollTl = gsap.timeline({
       scrollTrigger: {
@@ -40,9 +57,9 @@ onMounted(() => {
     })
 
     scrollTl
-      .to(col1Ref.value, { x: '-60vw', opacity: 0, ease: 'power2.in' }, 0)
-      .to(col2Ref.value, { x: '-60vw', opacity: 0, ease: 'power2.in' }, 0.08)
-      .to(col3Ref.value, { x: '-60vw', opacity: 0, ease: 'power2.in' }, 0.16)
+      .to(col1Ref.value, { x: '-130vw', ease: 'power2.in' }, 0)
+      .to(col2Ref.value, { x: '-130vw', ease: 'power2.in' }, 0.12)
+      .to(col3Ref.value, { x: '-130vw', ease: 'power2.in' }, 0.24)
       .fromTo(overlayRef.value, { opacity: 1 }, { opacity: 0, ease: 'none' }, 0)
   })
 })
@@ -60,6 +77,7 @@ onUnmounted(() => {
   >
     <!-- Background image -->
     <div
+      ref="heroBgRef"
       class="hero-bg absolute inset-0 -top-20 bg-cover bg-center"
       style="background-image: url('/images/hero-section.webp'); background-position: center 50%; -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%); mask-image: linear-gradient(to bottom, black 70%, transparent 100%);"
     />
